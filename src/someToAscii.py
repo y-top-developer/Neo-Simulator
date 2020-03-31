@@ -14,13 +14,13 @@ def main(pivot, mode, base, sizeOfChar, func):
     asciiString = "".join(["0" * (sizeOfChar - len(func(ord(random.choice(typesOfString[typeOfString])))[2:])) + func(ord(random.choice(typesOfString[typeOfString])))[2:] for i in range(sizeOfString)])
     correctResult = [int(asciiString[i : i + sizeOfChar], base) for i in range(0, len(asciiString), sizeOfChar)]
 
-    inputResult = list(input(f"Enter '{asciiString}' in binary: "))
+    inputResult = list(input(f"Enter '{asciiString}': "))
 
-    print(pivot)
+    print("\n", pivot, sep = "")
     noError = True
     for correctResultElement, inputResultElement in zip(correctResult, inputResult):
         if (chr(correctResultElement) != inputResultElement):
             print(f"'{'0' * (sizeOfChar - len(func(correctResultElement)[2:])) + func(correctResultElement)[2:]}' is '{chr(correctResultElement)}' but not '{inputResultElement}'")
             noError = False
-    print(pivot)
+    print(pivot, "\n")
     print(("Try harder!", "Congrats!")[noError])

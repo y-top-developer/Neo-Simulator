@@ -7,7 +7,7 @@ welcome = "_2_"
 print("{0}\n{1:^16}\n{0}".format(pivot, welcome))
 
 while True:
-    print("\ntypes:\n\tascii2hex - 0\n\tascii2binary - 1\n\thex2ascii - 2\n\tbinary2ascii - 3\n\texit - -1\n")
+    print("\ntypes:\n\t0 - ascii2hex\n\t1 - ascii2binary\n\t2 - hex2ascii\n\t3 - binary2ascii\n\t5 - exit\n")
     type = int(input("Enter type: "))
 
     if type == 0:
@@ -18,5 +18,5 @@ while True:
         someToAscii.main(pivot, "Hex2ASCII", 16, 2, hex)
     elif type == 3:
         someToAscii.main(pivot, "Binary2ASCII", 2, 8, bin)
-    elif type == -1:
+    elif type == 5:
         exit(1)
