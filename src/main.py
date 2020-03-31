@@ -7,7 +7,7 @@ welcome = "_2_"
 print("{0}\n{1:^16}\n{0}".format(pivot, welcome))
 
 while True:
-    print("types: ascii2hex - 0, ascii2binary - 1, hex2ascii - 2, binary2ascii - 3, exit - -1")
+    print("\ntypes:\n\tascii2hex - 0\n\tascii2binary - 1\n\thex2ascii - 2\n\tbinary2ascii - 3\n\texit - -1\n")
     type = int(input("Enter type: "))
 
     if type == 0:

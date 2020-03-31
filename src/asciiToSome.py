@@ -2,13 +2,13 @@ import string
 import random
 
 def main(pivot, mode, base, sizeOfChar, func):
-    print("{0}\n{1:^16}\n{0}".format(pivot, mode))
+    print("{0}\n{1:^16}\n{0}\n".format(pivot, mode))
 
     sizeOfString = int(input("Enter size of string: "))
 
     printable = "".join(set(string.printable) - set(string.whitespace))
     typesOfString = [string.digits, string.ascii_letters, string.ascii_lowercase, string.ascii_uppercase, printable]
-    print("types: 0 - digits, 1 - ascii_letters, 2 - ascii_lowercase, 3 - ascii_uppercase, 4 - printable (without whitespace)")
+    print("types:\n\t0 - digits\n\t1 - ascii_letters\n\t2 - ascii_lowercase\n\t3 - ascii_uppercase\n\t4 - printable (without whitespace)\n")
     typeOfString = int(input("Enter type of string: "))
 
     asciiString = "".join([random.choice(typesOfString[typeOfString]) for i in range(sizeOfString)])
