@@ -11,10 +11,10 @@ def main(pivot, mode, base, sizeOfChar, func):
     print("types:\n\t0 - digits\n\t1 - ascii_letters\n\t2 - ascii_lowercase\n\t3 - ascii_uppercase\n\t4 - printable (without whitespace)\n")
     typeOfString = int(input("Enter type of string: "))
 
-    asciiString = "".join(["0" * (sizeOfChar - len(func(ord(random.choice(typesOfString[typeOfString])))[2:])) + func(ord(random.choice(typesOfString[typeOfString])))[2:] for i in range(sizeOfString)])
-    correctResult = [int(asciiString[i : i + sizeOfChar], base) for i in range(0, len(asciiString), sizeOfChar)]
+    someString = "".join(["0" * (sizeOfChar - len(func(ord(random.choice(typesOfString[typeOfString])))[2:])) + func(ord(random.choice(typesOfString[typeOfString])))[2:] for i in range(sizeOfString)])
+    correctResult = [int(someString[i : i + sizeOfChar], base) for i in range(0, len(someString), sizeOfChar)]
 
-    inputResult = list(input(f"Enter '{asciiString}': "))
+    inputResult = list(input(f"Enter '{someString}': "))
 
     print("\n", pivot, sep = "")
     noError = True
