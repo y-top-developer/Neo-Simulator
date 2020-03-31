@@ -13,8 +13,17 @@ print("types: 0 - digits, 1 - ascii_letters, 2 - ascii_lowercase, 3 - ascii_uppe
 typeOfString = int(input("Enter type of string: "))
 
 asciiString = "".join([random.choice(typesOfString[typeOfString]) for i in range(sizeOfString)])
-correctResult = "".join(["0" * (8 - len(bin(ord(c))[2:])) + bin(ord(c))[2:] for c in asciiString])
+correctResult = ["0" * (8 - len(bin(ord(c))[2:])) + bin(ord(c))[2:] for c in asciiString]
 
+sizeOfByte = 8
 inputResult = input(f"Enter '{asciiString}' in binary: ")
+inputResult = [inputResult[i : i + sizeOfByte] for i in range(0, len(inputResult), sizeOfByte)]
 
-print((correctResult, "Congrats!")[inputResult == correctResult])
+print(pivot)
+noError = True
+for correctResultElement, inputResultElement in zip(correctResult, inputResult):
+    if (correctResultElement != inputResultElement):
+        print(f"'{chr(int(correctResultElement, 2))}' is '{correctResultElement}' but not '{inputResultElement}'")
+        noError = False
+print(pivot)
+print(("Try harder!", "Congrats!")[noError])
