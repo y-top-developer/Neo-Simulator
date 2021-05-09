@@ -2,39 +2,9 @@ import os
 import time
 import threading
 
-from src.Simulator import Simulator
+from src.Form import Form
 from src.Window import Window
-
-class Form:
-	def __init__(self, width, height):
-		self.width = width
-		self.height = height
-		self.image = self.generate_image()
-
-	def generate_image(self):
-		result = []
-		for i in range(self.height):
-			line = []
-			for j in range(self.width):
-				if i in [0, self.height - 1] or j in [0, self.width - 1]:
-					line.append('#')
-				else:
-					line.append(' ')
-			result.append(line)
-		return result
-
-	def set_string(self, string, y, x):
-		iterator = 0
-		y = 1 if y == 0 else y
-		for i in range(y, self.height - 1):
-			for j in range(1, self.width - 1):
-				if iterator >= len(string):
-					return
-				self.image[i][j] = string[iterator]
-				iterator += 1
-				
-
-
+from src.Simulator import Simulator
 
 class UI:
 	def __init__(self, initial, final, level, pivot):
@@ -44,29 +14,56 @@ class UI:
 	def render_background_with_form(self, form):
 		x = self.background.x + (self.background.width - form.width) // 2
 		y = self.background.y + (self.background.height - form.height) // 2
-		for i in range(2):
-			self.background.render_window(x=x, y=y, width=form.width, height=form.height, image=form.image)
-			time.sleep(1)
+		form.set_x_y(x, y)
+		for i in range(100000):
+			self.background.render_window(form)
+			time.sleep(0.3)
 			self.background.push_new_line_on_window()
 		
+	def one_game(self, form):
+		tick = 0.3
+		form.set_string('Enter size:', *(1, 1))
+		time.sleep(tick)
+		size = form.get_and_set_string_from_input(2, 1)
+	
+		data = self.simulator.get_data(int(size))
+		initial = self.simulator.get_initial(data)
+		form.set_string(initial, *(3, 1))
+		time.sleep(tick)
+
+		form.set_string('Enter string:', *(4 + 2, 1))
+		time.sleep(tick)
+		user_input = form.get_and_set_string_from_input(5 + 2, 1)
+
+		form.set_string('Result:', *(6 + 2, 1))
+		time.sleep(tick)
+		result = self.simulator.validate_input(user_input, data)
+		if result['status'] == 'SUCCESS':
+			i = 7
+			form.set_string('SUCCESS', *(7 + 2, 1))
+			time.sleep(tick)
+		else:
+			for i, message in enumerate(result['messages'], start=7 + 2):
+				result = ''
+				if message[0] == 'incompatible':
+					result = f'#{message[1]}, expected {message[3]} but was {message[2]}'
+				else:
+					result = f'Incorrect size'
+				
+				form.set_string(result, *(i, 1))
+				time.sleep(tick)
+		
+		form.set_string('pause', *(i + 1 + 2, 1))
+		time.sleep(tick)
+		user_input = form.get_and_set_string_from_input(i + 2 + 2, 1)
+		form.clean()
+
 	def run(self):
-		form = Form(20, 20)
+		width, height = os.get_terminal_size()
+
+		form = Form(width // 2, height // 2)
 		thread = threading.Thread(target=self.render_background_with_form,args=([form]))
 		thread.start()
 
-		form.set_string('Enter size:' * 3, *(1, 1))
-		# size = input()
-		data = self.simulator.get_data(3)
-		initial = self.simulator.get_initial(data)
-		form.set_string(initial, *(2, 1))
-		# response = input()
-
-		# for i in range(len(data)):
-		# 	for j in range(len(data[0])):
-		# 		data[i][j] = '!'
-# data = self.simulator.get_data(3)
-# print(self.simulator.get_initial(data))
-# response = input('Get response:')
-# print(self.simulator.validate_input(response, data))
-# def run(self, size):
-#     
+		while True:
+			self.one_game(form)

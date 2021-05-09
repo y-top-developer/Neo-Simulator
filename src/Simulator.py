@@ -26,7 +26,7 @@ class Simulator(DataProvider):
             if a != b:
                 result['status'] = 'ERROR'
                 result['messages'].append(('incompatible', i, a, b))
-        if i != len(final):
+        if i != len(final) - 1:
             result['status'] = 'ERROR'
             result['messages'].append(('incommensurate', i, a, b))
         return result

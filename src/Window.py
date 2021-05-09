@@ -14,7 +14,10 @@ class Window:
 	def generate_image(self):
 		return [[choice(self.characters) for _ in range(self.width)] for _ in range(self.height)]
 
-	def render_window(self, **form):
+	def render_window(self, form=None):
+		if form:
+			while form.active:
+				pass
 		for y in range(self.terminal_height):
 			if y < self.y or y >= self.height + self.y:
 				print('\n', end='\r')
@@ -23,8 +26,8 @@ class Window:
 			for x in range(self.terminal_width):
 				if x < self.x or x >= self.width + self.x:
 					line += ' '
-				elif form and y >= form['y'] and x >= form['x'] and y < form['y'] + form['height'] and x < form['x'] + form['width']:
-					line += form['image'][y - form['y']][x - form['x']]
+				elif form and y >= form.y and x >= form.x and y < form.y + form.height and x < form.x + form.width:
+					line += form.image[y - form.y][x - form.x]
 				else:
 					line += self.image[y - self.y][x - self.x]
 			print(line, end='\r')
