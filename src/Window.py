@@ -23,7 +23,7 @@ class Window:
 			for x in range(self.terminal_width):
 				if x < self.x or x >= self.width + self.x:
 					line += ' '
-				elif form and form['y'] >= y and form['x'] >= x and form['y'] < y + form['height'] and form['x'] < x + form['width']:
+				elif form and y >= form['y'] and x >= form['x'] and y < form['y'] + form['height'] and x < form['x'] + form['width']:
 					line += form['image'][y - form['y']][x - form['x']]
 				else:
 					line += self.image[y - self.y][x - self.x]
